@@ -4,6 +4,8 @@ import RouteNames from "./RouteNames"
 export type NavigationParams = {
   [RouteNames.InitialScreen]: undefined
   [RouteNames.DownloadingScreen]: {
-    videoDetails: YouTubeVideoInfo
+    videoDetails: YouTubeVideoInfo;
+    filePath: string;
+    youtubeLink: string;
   }
 }

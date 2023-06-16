@@ -12,3 +12,11 @@ export interface YouTubeVideoInfo {
   lengthSeconds: number;
   likes: number | null;
 }
+
+export enum STEPS {
+  DOWNLOAD,
+  CONVERT,
+  SAVE,
+  SUCCESS,
+  FAIL,
+}

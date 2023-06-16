@@ -15,7 +15,8 @@ import CustomIcon, { IconsVariant } from "./CustomIcons/CustomIcon";
 import Theme from "../assets/theme/theme.styles";
 import { textStyles } from "../assets/theme/shared.styles";
 import { EntypoIconsNames } from "./CustomIcons/IconNames";
-import { pickDirectory } from "react-native-document-picker";
+import { pickDirectory } from 'react-native-document-picker';
+import * as FileSystem from 'expo-file-system';
 
 export enum FormInputVariant {
   TEXT,
@@ -70,7 +71,8 @@ const FormInput = ({
       if (result != null &&  result.uri != null) {
         filePath = result.uri;
         const name = filePath.match(/([^\/]*)\/*$/)[1];
-        onChangeInput(name)
+        const destinationPath = `${FileSystem.documentDirectory}${name}`;
+        onChangeInput(destinationPath)
       }
     } catch (e) {
      
@@ -133,6 +135,7 @@ const FormInput = ({
       </Pressable>
     )
   }, []);
+
   return (
     <View style={[styles.root, rootStyle, fullWidth ? styles.fullRoot : {}]}>
       <Text style={styles.label}>{label}</Text>

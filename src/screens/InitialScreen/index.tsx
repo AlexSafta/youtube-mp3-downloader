@@ -1,5 +1,5 @@
 import { StackScreenProps } from "@react-navigation/stack";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Text, StyleSheet, View } from "react-native";
 
 import { Button, CustomIcon, FormInput, Screen } from "../../components";
@@ -12,12 +12,12 @@ import Theme from "../../assets/theme/theme.styles";
 import { textStyles } from "../../assets/theme/shared.styles";
 import { FormInputVariant } from "../../components/FormInput";
 import ytdl from "react-native-ytdl";
-import ytdlCore from 'ytdl-core';
 
 const InitialScreen = ({
   navigation
 }: StackScreenProps<NavigationParams, RouteNames.InitialScreen>) => {
   const [youtubeLink, setYoutubeLink] = useState<string>('');
+  const [inputFilePath, setInputFilePath] = useState<string>('');
   const [filePath, setFilePath] = useState<string>('');
 
   const validInput = useMemo<boolean>(
@@ -27,26 +27,41 @@ const InitialScreen = ({
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleClear = () => {
-    setYoutubeLink('')
+    setYoutubeLink('');
   }
 
   const handleStartDownloading = async () => {
+    setIsLoading(true);
     try {
-    const videoInfo = await ytdl.getInfo(youtubeLink);
-    const videoDetails = videoInfo.videoDetails;
+      const videoInfo = await ytdl.getInfo(youtubeLink);
+      const videoDetails = videoInfo.videoDetails;
 
-    if (videoDetails) {
-      navigation.navigate(RouteNames.DownloadingScreen, {
-        videoDetails: videoDetails,
-      });
+      if (videoDetails) {
+        navigation.navigate(RouteNames.DownloadingScreen, {
+          videoDetails: videoDetails,
+          filePath,
+          youtubeLink,
+        });
+      }
+    } catch (error) {
+      console.log('Error fetching YouTube video details:', error);
+    } finally {
+      setIsLoading(false);
     }
-  } catch (error) {
-    console.log('Error fetching YouTube video details:', error);
-  }
   }
 
   useEffect(() => {
+    if (filePath) {
+      const name = filePath.match(/([^\/]*)\/*$/)[1];
+      setInputFilePath(name);
+    } else {
+      setInputFilePath('');
+    }
+  }, [filePath]);
+
+  useEffect(() => {
     setFilePath('');
+    setInputFilePath('');
     setYoutubeLink('');
   }, [])
 
@@ -85,10 +100,10 @@ const InitialScreen = ({
           }}
         />
         <FormInput 
-          value={filePath}
+          value={inputFilePath}
           label={"Destination Folder"} 
           variant={FormInputVariant.BROWSE}
-          placeholder={filePath || "File path"}
+          placeholder={inputFilePath || "File path"}
           infoMessage={"Where you want to save the MP3"}
           onChangeInput={(value) => setFilePath(value)} 
           startIcon={{
