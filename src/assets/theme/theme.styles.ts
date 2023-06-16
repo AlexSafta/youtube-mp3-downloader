@@ -12,6 +12,15 @@ const Theme = {
   lightGrey1: "#E8E8E8", // borderGrey
   lightGrey2: "#EFEFEF", // loaderGrey
   lightGrey3: "#FAFAFA", // inputBackgroundGrey
-}
+
+  // Font Styles
+  fontFamily200: 'JakartaSansExtraLight',
+  fontFamily300: 'JakartaSansLight',
+  fontFamily400: 'JakartaSansRegular',
+  fontFamily500: 'JakartaSansMedium',
+  fontFamily600: 'JakartaSansSemiBold',
+  fontFamily700: 'JakartaSansBold',
+  fontFamily800: 'JakartaSansExtraBold',
+};
 
 export default Theme;

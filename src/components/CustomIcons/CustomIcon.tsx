@@ -1,7 +1,7 @@
 
 import React from "react";
 import { AntDesign, Entypo, MaterialIcons } from "@expo/vector-icons";
-import Theme from "../../assets/theme";
+import Theme from "../../assets/theme/theme.styles";
 
 export enum IconsVariant {
   AntDesign,
