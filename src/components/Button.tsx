@@ -1,5 +1,5 @@
 import React from "react";
-import { Pressable, Text, ActivityIndicator, StyleSheet } from "react-native";
+import { Pressable, Text, ActivityIndicator, StyleSheet, ViewStyle, StyleProp } from "react-native";
 import Theme from "../assets/theme/theme.styles";
 import { textStyles } from "../assets/theme/shared.styles";
 
@@ -11,6 +11,7 @@ interface ButtonProps {
   disabled?: boolean;
   loading?: boolean;
   onPress(): void;
+  style?: StyleProp<ViewStyle>;
 }
 
 const Button = ({
@@ -20,13 +21,15 @@ const Button = ({
   textColor = Theme.white,
   disabled = false,
   loading = false,
-  onPress
+  onPress,
+  style,
 }: ButtonProps) => {
   return (
     <Pressable
       disabled={disabled}
       onPress={onPress}
       style={({ pressed }) => [
+        style,
         styles.root,
         {
           opacity: pressed? 0.75 : 1,

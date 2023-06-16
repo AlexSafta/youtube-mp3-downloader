@@ -101,14 +101,15 @@ const FormInput = ({
       );
   }, [])
 
-  const renderTextInput = useCallback(() => {
+  const renderTextInput = useCallback((inputValue: string) => {
     return (
       <TextInput
-        value={value}
+        value={inputValue}
         placeholder={placeholder}
         placeholderTextColor={Theme.black}
         editable={!disabled}
-        onChangeText={onChangeInput}
+        numberOfLines={1}
+        onChangeText={(value) => onChangeInput(value)}
         style={[styles.input]}
         {...others}
       />
@@ -132,13 +133,12 @@ const FormInput = ({
       </Pressable>
     )
   }, []);
-
   return (
     <View style={[styles.root, rootStyle, fullWidth ? styles.fullRoot : {}]}>
       <Text style={styles.label}>{label}</Text>
       <View style={[styles.inputWrapper, isError ? styles.errorInput : styles.validInput]}>
         {renderIcon(startIcon)}
-        {variant === FormInputVariant.TEXT ? renderTextInput() : renderPressInput(value || placeholder)}
+        {variant === FormInputVariant.TEXT ? renderTextInput(value) : renderPressInput(value || placeholder)}
         {renderIcon(endIcon, false)}
       </View>
       {infoMessage && (

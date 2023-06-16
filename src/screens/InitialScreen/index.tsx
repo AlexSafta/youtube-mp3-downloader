@@ -11,6 +11,8 @@ import { AntDesignIconsNames } from "../../components/CustomIcons/IconNames";
 import Theme from "../../assets/theme/theme.styles";
 import { textStyles } from "../../assets/theme/shared.styles";
 import { FormInputVariant } from "../../components/FormInput";
+import ytdl from "react-native-ytdl";
+import ytdlCore from 'ytdl-core';
 
 const InitialScreen = ({
   navigation
@@ -28,10 +30,25 @@ const InitialScreen = ({
     setYoutubeLink('')
   }
 
-  const handleStartDownloading = () => {
-    console.log('Start downloading...')
-    navigation.navigate(RouteNames.DownloadingScreen);
+  const handleStartDownloading = async () => {
+    try {
+    const videoInfo = await ytdl.getInfo(youtubeLink);
+    const videoDetails = videoInfo.videoDetails;
+
+    if (videoDetails) {
+      navigation.navigate(RouteNames.DownloadingScreen, {
+        videoDetails: videoDetails,
+      });
+    }
+  } catch (error) {
+    console.log('Error fetching YouTube video details:', error);
   }
+  }
+
+  useEffect(() => {
+    setFilePath('');
+    setYoutubeLink('');
+  }, [])
 
   return (
     <Screen>

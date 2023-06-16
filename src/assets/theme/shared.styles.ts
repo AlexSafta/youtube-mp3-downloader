@@ -27,6 +27,12 @@ export const textStyles = StyleSheet.create({
     lineHeight: 20,
     fontStyle: "normal",
     fontFamily: Theme.fontFamily500,
+  },
+  cardInfo: {
+    fontSize: 12,
+    lineHeight: 16,
+    fontStyle: "normal",
+    fontFamily: Theme.fontFamily600,
   }
 });
 

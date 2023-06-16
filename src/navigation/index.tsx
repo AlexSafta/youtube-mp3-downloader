@@ -4,6 +4,7 @@ import { NavigationParams } from "./NavigationParams";
 import { NavigationContainer } from "@react-navigation/native";
 import RouteNames from "./RouteNames";
 import InitialScreen from "../screens/InitialScreen";
+import DownloadingScreen from "../screens/DownloadingScreen";
 
 const Stack = createStackNavigator<NavigationParams>();
 
@@ -18,6 +19,7 @@ const Navigation = () => {
           ...TransitionPresets.SlideFromRightIOS,
         }}>
         <Stack.Screen name={RouteNames.InitialScreen} component={InitialScreen} />
+        <Stack.Screen name={RouteNames.DownloadingScreen} component={DownloadingScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   )
