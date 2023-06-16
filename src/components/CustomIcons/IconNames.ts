@@ -6,7 +6,8 @@ export enum AntDesignIconsNames {
   like = 'like1',
   views = 'eye',
   directory = 'folderopen',
-  warning = 'exclamationcircle'
+  warning = 'exclamationcircle',
+  folder = 'folderopen',
 }
 
 export enum EntypoIconsNames {
