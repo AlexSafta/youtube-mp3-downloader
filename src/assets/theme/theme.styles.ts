@@ -2,6 +2,7 @@ const Theme = {
   red: "#FF0000",
   lightRed: "#DC4A4A",
   purple: "#892EFF",
+  lightPurple: "#9D7CC8",
   blue: "#3690FA",
   lightBlue: "#28C6D0",
   yellow: "#FFBB0E",
@@ -9,7 +10,7 @@ const Theme = {
   black: "#1A0D0D",
   white: "#FFFFFF",
   grey: "#858181",
-  lightGrey1: "#E8E8E8", // borderGrey
+  lightGrey1: "#D3D3D3", // borderGrey
   lightGrey2: "#EFEFEF", // loaderGrey
   lightGrey3: "#FAFAFA", // inputBackgroundGrey
 
