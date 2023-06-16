@@ -61,7 +61,6 @@ const InitialScreen = ({
 
   useEffect(() => {
     setFilePath('');
-    setInputFilePath('');
     setYoutubeLink('');
   }, [])
 

@@ -73,9 +73,6 @@ const DownloadingScreen = ({
       const audioFormat = audioFormats[0];
 
       await FileSystem.makeDirectoryAsync(filePath, { intermediates: true });
-
-
-      console.log(audioInfo)
       
       // Download the audio file
       const audioFileUri = `${filePath}/audio.mp3`;
