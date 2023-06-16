@@ -1,5 +1,5 @@
 import { StackScreenProps } from "@react-navigation/stack";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Text, StyleSheet, View } from "react-native";
 
 import { Button, CustomIcon, FormInput, Screen } from "../../components";
@@ -12,7 +12,9 @@ import Theme from "../../assets/theme/theme.styles";
 import { textStyles } from "../../assets/theme/shared.styles";
 import { FormInputVariant } from "../../components/FormInput";
 
-const InitialScreen = ({}: StackScreenProps<NavigationParams, RouteNames.InitialScreen>) => {
+const InitialScreen = ({
+  navigation
+}: StackScreenProps<NavigationParams, RouteNames.InitialScreen>) => {
   const [youtubeLink, setYoutubeLink] = useState<string>('');
   const [filePath, setFilePath] = useState<string>('');
 
@@ -24,6 +26,7 @@ const InitialScreen = ({}: StackScreenProps<NavigationParams, RouteNames.Initial
 
   const handleStartDownloading = () => {
     console.log('Start downloading...')
+    navigation.navigate(RouteNames.DownloadingScreen);
   }
 
   return (
@@ -61,10 +64,10 @@ const InitialScreen = ({}: StackScreenProps<NavigationParams, RouteNames.Initial
           }}
         />
         <FormInput 
-          value={filePath} 
+          value={filePath}
           label={"Destination Folder"} 
           variant={FormInputVariant.BROWSE}
-          placeholder={"File path"}
+          placeholder={filePath || "File path"}
           infoMessage={"Where you want to save the MP3"}
           onChangeInput={(value) => setFilePath(value)} 
           startIcon={{

@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode, useCallback, useMemo, useState } from "react";
+import React, { ReactElement, ReactNode, useCallback, useEffect, useMemo, useState } from "react";
 import { 
   GestureResponderEvent, 
   StyleProp, 
@@ -15,6 +15,7 @@ import CustomIcon, { IconsVariant } from "./CustomIcons/CustomIcon";
 import Theme from "../assets/theme/theme.styles";
 import { textStyles } from "../assets/theme/shared.styles";
 import { EntypoIconsNames } from "./CustomIcons/IconNames";
+import { pickDirectory } from "react-native-document-picker";
 
 export enum FormInputVariant {
   TEXT,
@@ -61,10 +62,19 @@ const FormInput = ({
   others,
   onChangeInput,
 }: FormInputProps) => {
-
-  const handlePickupFilePath = useCallback(() => {
+  const handlePickupFilePath = useCallback(async () => {
     let filePath: string = '';
-    onChangeInput(filePath);
+    try {
+      const result = await pickDirectory();
+
+      if (result != null &&  result.uri != null) {
+        filePath = result.uri;
+        const name = filePath.match(/([^\/]*)\/*$/)[1];
+        onChangeInput(name)
+      }
+    } catch (e) {
+     
+    }
   }, [])
 
   const renderIcon = useCallback((icon?: FromInputIconProps, isStart: boolean = true) => {
@@ -105,7 +115,7 @@ const FormInput = ({
     )
   }, []);
 
-  const renderPressInput = useCallback(() => {
+  const renderPressInput = useCallback((inputValue?: string) => {
     return (
       <Pressable
         onPress={handlePickupFilePath}
@@ -116,9 +126,9 @@ const FormInput = ({
           }
         ]}
       >
-        <Text style={styles.browsePlaceholder}>
-          {value || placeholder}
-        </Text>
+        {inputValue && <Text style={styles.browsePlaceholder}>
+          {inputValue}
+        </Text>}
       </Pressable>
     )
   }, []);
@@ -128,7 +138,7 @@ const FormInput = ({
       <Text style={styles.label}>{label}</Text>
       <View style={[styles.inputWrapper, isError ? styles.errorInput : styles.validInput]}>
         {renderIcon(startIcon)}
-        {variant === FormInputVariant.TEXT ? renderTextInput() : renderPressInput()}
+        {variant === FormInputVariant.TEXT ? renderTextInput() : renderPressInput(value || placeholder)}
         {renderIcon(endIcon, false)}
       </View>
       {infoMessage && (
