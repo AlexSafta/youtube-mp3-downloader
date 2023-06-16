@@ -1,5 +1,5 @@
 import { StackScreenProps } from "@react-navigation/stack";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Text, StyleSheet, View } from "react-native";
 
 import { Button, CustomIcon, FormInput, Screen } from "../../components";
@@ -17,6 +17,10 @@ const InitialScreen = ({
 }: StackScreenProps<NavigationParams, RouteNames.InitialScreen>) => {
   const [youtubeLink, setYoutubeLink] = useState<string>('');
   const [filePath, setFilePath] = useState<string>('');
+
+  const validInput = useMemo<boolean>(
+    () => youtubeLink !== '' && youtubeLink != null && filePath !== '' && filePath != null
+  , [filePath, youtubeLink])
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -82,9 +86,9 @@ const InitialScreen = ({
       <Button 
         title={'Download'}
         loadingTitle={'Grabbing info...'} 
-        disabled={isLoading}
+        disabled={isLoading || !validInput}
         loading={isLoading}
-        color={isLoading ? Theme.lightPurple : Theme.purple}
+        color={(isLoading || !validInput) ? Theme.lightPurple : Theme.purple}
         onPress={handleStartDownloading}
       />
     </Screen>
